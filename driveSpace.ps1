@@ -9,9 +9,7 @@ Invoke-Command -computerName (
  
                 ) -command {
                     
-                    #SAVED PROGRESS LINE-----Get-WmiObject win32_logicaldisk -filter "DeviceID='c:'" | select @{n='Percentage of Memory Remaining'; e={($_.freespace / $_.size)*100}} | where {{($_.freespace / $_.size)*100} -gt $criticalThreshold}
-                    
+                   
                     Get-WmiObject win32_logicaldisk -filter "DeviceID='c:'" | where {($_.freespace / $_.size)*100 -lt 5} | select @{n='Percentage of Memory Remaining'; e={($_.freespace / $_.size)*100}}, ExtentionAttribute2
-                    #Get-WmiObject win32_logicaldisk -filter "DeviceID='c:'" | select @{n='Percentage of Memory Remaining'; e={($_.freespace / $_.size)*100}} | where {{($_.freespace / $_.size)*100} -gt $criticalThreshold}
-
+                    
                 }  -ThrottleLimit 250 | export-csv C:\users\huffa\test1.csv
